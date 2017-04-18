@@ -1,0 +1,29 @@
+#!py 
+def run(): 
+    role_definitions = {
+        'haproxy': [
+            'minion2',
+            'node1',
+        ],
+        'webserver': [
+            'minion1',
+            'node2',
+            'node4',
+            'node5',
+        ],
+        'database': [
+            'node3',
+            'minion2',
+            'node4',
+        ],
+        'caching': [
+            'node5',
+        ],
+    }
+
+    roles = [k for k, v in role_definitions.iteritems() 
+        if __opts__['id'] in v] 
+
+    return { 
+        'roles': roles, 
+    } 

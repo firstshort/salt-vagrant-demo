@@ -1,0 +1,14 @@
+{% for web_server, web_addrs in salt['mine.get']('roles:web', 'network.ip_addrs', expr_form='grain') | dictsort() %}
+  {% for lb_server, lb_addrs in salt['mine.get']('roles:lb', 'network.ip_addrs', expr_form='grain') | dictsort() %}
+
+      disable_webserver_in_haproxy:
+        salt.function:
+          - name: cmd.shell
+          - tgt: 'minion2'
+          - arg:
+            - echo "disable server episode46/{{ web_server }}" | socat stdio /var/lib/haproxy/stats
+      
+
+  {% endfor %}
+{% endfor %}
+
